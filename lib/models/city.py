@@ -1,4 +1,4 @@
-# from models.__init__ import CURSOR, CONN
+from models.__init__ import CURSOR, CONN
 from lib.models.country import Country
 
 class City:
@@ -63,3 +63,111 @@ class City:
         else:
             raise ValueError(
                 "country_id must reference a country in the database")
+        
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABLE IF NOT EXISTS cities (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            visited TEXT,
+            population INTEGER,
+            country_id INTEGER,
+            FOREIGN KEY (country_id) REFERENCES countries(id))
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    @classmethod
+    def drop_table(cls):
+        sql = """
+            DROP TABLE IF EXISTS cities;
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    def save(self):
+        sql = """
+                INSERT INTO cities (name, visited, population, country_id)
+                VALUES (?, ?, ?, ?)
+        """
+
+        CURSOR.execute(sql, (self.name, self.visited, self.population, self.country_id))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+
+    def update(self):
+        sql = """
+            UPDATE countries
+            SET name = ?, visited = ?, population = ?, country_id = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name, self.visited, self.population,
+                             self.country_id, self.id))
+        CONN.commit()
+
+    def delete(self):
+        sql = """
+            DELETE FROM cities
+            WHERE id = ?
+        """
+
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
+
+    @classmethod
+    def create(cls, name, visited, population, country_id):
+        city = cls(name, visited, population, country_id)
+        city.save()
+        return city
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        city = cls.all.get(row[0])
+        if city:
+            city.name = row[1]
+            city.visited = row[2]
+            city.population = row[3]
+            city.country_id = row[4]
+        else:
+            city = cls(row[1], row[2], row[3])
+            city.id = row[0]
+            cls.all[city.id] = city
+        return city
+    
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT *
+            FROM cities
+        """
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT *
+            FROM cities
+            WHERE id = ?
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def find_by_name(cls, name):
+        sql = """
+            SELECT *
+            FROM cities
+            WHERE name is ?
+        """
+
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
