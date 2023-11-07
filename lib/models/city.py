@@ -1,5 +1,5 @@
 from models.__init__ import CURSOR, CONN
-from lib.models.country import Country
+from .country import Country
 
 class City:
 
@@ -47,7 +47,7 @@ class City:
     
     @population.setter
     def population(self, population):
-        if isinstance(population, int) and population < Country.all[self.country_id].population:
+        if isinstance(population, int) and population > 100000:
             self._population = population
         else:
             raise ValueError("Population must be an Integer less than the population of its country")

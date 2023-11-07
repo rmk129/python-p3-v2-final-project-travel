@@ -151,7 +151,7 @@ class Country:
         return cls.instance_from_db(row) if row else None
     
     def cities(self):
-        from lib.models.city import City
+        from .city import City
         sql = """
             SELECT * FROM cities
             WHERE country_id = ?

@@ -4,8 +4,8 @@
 from models.__init__ import CONN, CURSOR
 from lib.models.country import Country
 from lib.models.city import City
-# import ipdb
+import ipdb
 
 
-# ipdb.set_trace()
+ipdb.set_trace()
 breakpoint()
