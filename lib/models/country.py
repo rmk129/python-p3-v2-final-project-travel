@@ -129,15 +129,18 @@ class Country:
         return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
-    def find_by_id(cls, id):
+    def find_by_language(cls, language):
         sql = """
             SELECT *
             FROM countries
-            WHERE id = ?
+            WHERE language = ?
         """
 
-        row = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.instance_from_db(row) if row else None
+        rows = CURSOR.execute(sql, (language,)).fetchall()
+        if rows:
+            return [cls.instance_from_db(row) for row in rows]
+        else:
+            None
 
     @classmethod
     def find_by_name(cls, name):
