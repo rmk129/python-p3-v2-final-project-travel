@@ -5,6 +5,12 @@ from helpers import (
     list_countries,
     find_country_by_name,
     find_countries_by_language,
+    create_country,
+    update_country,
+    delete_country,
+    countries_with_cities_not_visited,
+    list_cities
+    
 
 )
 
@@ -21,6 +27,16 @@ def main():
             find_country_by_name()
         elif choice == "3":
             find_countries_by_language()
+        elif choice == "4":
+            create_country()
+        elif choice == "5":
+            update_country()
+        elif choice == "6":
+            delete_country()
+        elif choice == "7":
+            countries_with_cities_not_visited()
+        elif choice == "8":
+            list_cities()
         else:
             print("Invalid choice")
 
@@ -37,7 +53,7 @@ def menu():
     print("7. Show all countries with cities that have not been visited")
     print("8. List all cities")
     print("9. Find city by name")
-    print("10. Find city by ID")
+    print("10. List cities by population in a country")
     print("11. Add city")
     print("12. Update city")
     print("13. Delete city")

@@ -2,8 +2,8 @@
 # lib/debug.py
 
 from models.__init__ import CONN, CURSOR
-from lib.models.country import Country
-from lib.models.city import City
+from models.country import Country
+from models.city import City
 import ipdb
 
 

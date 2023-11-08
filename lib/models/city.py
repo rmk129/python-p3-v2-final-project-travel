@@ -130,11 +130,11 @@ class City:
         city = cls.all.get(row[0])
         if city:
             city.name = row[1]
-            city.visited = row[2]
+            city.visited = bool(int(row[2]))
             city.population = row[3]
             city.country_id = row[4]
         else:
-            city = cls(row[1], row[2], row[3])
+            city = cls(row[1], bool(int(row[2])), row[3], row[4])
             city.id = row[0]
             cls.all[city.id] = city
         return city
