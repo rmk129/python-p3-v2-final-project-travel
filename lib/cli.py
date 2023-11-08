@@ -53,13 +53,12 @@ def menu():
     print("7. Show all countries with cities that have not been visited")
     print("8. List all cities")
     print("9. Find city by name")
-    print("10. List cities by population in a country")
+    print("10. List all cities by population in a country")
     print("11. Add city")
     print("12. Update city")
     print("13. Delete city")
-    print("14. List all cities in a country")
-    print("15. List all visited cities")
-    print("16. List all cities not visited")
+    print("14. List all visited cities")
+    print("15. List all cities not visited")
 
 
 if __name__ == "__main__":
