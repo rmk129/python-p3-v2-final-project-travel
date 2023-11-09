@@ -70,7 +70,7 @@ class City:
             CREATE TABLE IF NOT EXISTS cities (
             id INTEGER PRIMARY KEY,
             name TEXT,
-            visited TEXT,
+            visited BOOLEAN,
             population INTEGER,
             country_id INTEGER,
             FOREIGN KEY (country_id) REFERENCES countries(id))
@@ -104,7 +104,7 @@ class City:
             SET name = ?, visited = ?, population = ?, country_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.visited, self.population,
+        CURSOR.execute(sql, (self.name, (self.visited), self.population,
                              self.country_id, self.id))
         CONN.commit()
 

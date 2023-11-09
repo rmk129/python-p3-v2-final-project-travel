@@ -13,7 +13,9 @@ from helpers import (
     find_city_by_name,
     cities_by_population_in_country,
     create_city,
-    update_city
+    update_city,
+    delete_city,
+    list_cities_by_visited
     
 
 )
@@ -49,6 +51,10 @@ def main():
             create_city()
         elif choice == "12":
             update_city()
+        elif choice == "13":
+            delete_city()
+        elif choice == "14":
+            list_cities_by_visited()
         else:
             print("Invalid choice")
 
@@ -69,8 +75,7 @@ def menu():
     print("11. Add city")
     print("12. Update city")
     print("13. Delete city")
-    print("14. List all visited cities")
-    print("15. List all cities not visited")
+    print("14. List cities by visited or not visited")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 # lib/helpers.py
 from models.city import City
 from models.country import Country
+from models.__init__ import CONN, CURSOR
 
 
 def exit_program():
@@ -121,4 +122,28 @@ def update_city():
             print("Error updating {city}: ", exc)
     else:
         print(f'City {input_name} not found')
+
+def delete_city():
+    input_name = input("Enter the City's name: ").title()
+    if city := City.find_by_name(input_name):
+        city.delete()
+        print(f'City {input_name} deleted')
+    else:
+        print(f'City {input_name} not found')
+
+def list_cities_by_visited():
+    input_info = input("Enter Y to see visited and N to see not visited: ").title()
+    cities = City.get_all()
+    if input_info == "Y" and cities:
+        visited_cities = [city for city in cities if city.visited == True]
+        for city in visited_cities:
+            print(city)
+    elif input_info == "N" and cities:
+        not_visited_cities = [city for city in cities if city.visited == False]
+        for city in not_visited_cities:
+            print(city)
+    else:
+        print("Input not valid. Please input Y or N")
+
+
 
