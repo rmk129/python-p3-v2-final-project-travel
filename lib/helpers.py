@@ -77,3 +77,48 @@ def list_cities():
     for city in cities:
         print(city)
 
+def find_city_by_name():
+    name = input("Enter the city's name: ").title()
+    city = City.find_by_name(name)
+    print(city) if city else print(f"City {name} not found")
+
+def cities_by_population_in_country():
+    name = input("Enter the Country's name: ").title()
+    country = Country.find_by_name(name)
+    cities = City.get_all()
+    cities_in_country = [city for city in cities if city.country_id == country.id]
+    cities_in_country.sort(key=lambda x: x.population, reverse=True)
+    for city in cities_in_country:
+        print(city)
+
+def create_city():
+    name = input("Enter City's name: ").title()
+    visited = bool(input("Enter True or False if you have visited the city: "))
+    population = int(input("Enter the City's population: "))
+    country_name = input("Enter the Country the City is in: ").title()
+    country = Country.find_by_name(country_name)
+
+    try:
+        city = City.create(name, visited, population, country.id)
+        print(f"Success: {city}")
+    except Exception as exc:
+        print("Error creating city: ", exc)
+
+def update_city():
+    input_name = input("Enter the City's name: ").title()
+    if city := City.find_by_name(input_name):
+        try:
+            name = input("Enter the City's new name: ")
+            city.name = name
+            visited = bool(input("Enter True or False if the city has been visited: "))
+            city.visited = visited
+            population = int(input("Enter the City's population: "))
+            city.population = population
+
+            city.update()
+            print(f'Success: {city}')
+        except Exception as exc:
+            print("Error updating {city}: ", exc)
+    else:
+        print(f'City {input_name} not found')
+

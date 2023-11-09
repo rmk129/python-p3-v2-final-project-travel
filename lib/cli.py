@@ -9,7 +9,11 @@ from helpers import (
     update_country,
     delete_country,
     countries_with_cities_not_visited,
-    list_cities
+    list_cities,
+    find_city_by_name,
+    cities_by_population_in_country,
+    create_city,
+    update_city
     
 
 )
@@ -37,6 +41,14 @@ def main():
             countries_with_cities_not_visited()
         elif choice == "8":
             list_cities()
+        elif choice == "9":
+            find_city_by_name()
+        elif choice == "10":
+            cities_by_population_in_country()
+        elif choice == "11":
+            create_city()
+        elif choice == "12":
+            update_city()
         else:
             print("Invalid choice")
 
