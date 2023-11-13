@@ -10,6 +10,9 @@ class City:
         self.visited = visited
         self.population = population
         self.country_id = country_id
+
+    def __repr__(self):
+        return f"<City {self.id}: {self.name}, {self.visited}, {self.population}, {self.country_id}>"
     
     @property
     def name(self):

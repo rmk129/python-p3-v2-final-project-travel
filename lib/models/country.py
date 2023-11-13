@@ -9,6 +9,9 @@ class Country:
         self.name = name
         self.language = language
         self.population = population
+
+    def __repr__(self):
+        return f"<Country {self.id}: {self.name}, {self.language}, {self.population}>"
     
     @property
     def name(self):

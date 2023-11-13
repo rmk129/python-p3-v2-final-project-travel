@@ -10,14 +10,17 @@ def exit_program():
 
 def list_countries():
     countries = Country.get_all()
+    print("\nThe following countries are in the Database. Don't see your country? Add it in!")
     for country in countries:
-        # breakpoint()
-        print(f"{country.name}")
+        print(f"{country.name} Country ID: {country.id}")
+        print("\nTo see a country's details, type the Country's ID provided next to the country in the list above")
+        find_country_by_name()
+
 
 def find_country_by_name():
-    name = input("Enter the Country's Name: ").title()
-    country = Country.find_by_name(name)
-    print(country) if country else print(f'Country {name} not found')
+    id_ = input("Enter the Country's ID: ")
+    country = Country.find_by_id(id_)
+    print(country) if country else print(f'Country {id_} not found')
 
 def find_countries_by_language():
     language = input("Enter the language: ").title()
