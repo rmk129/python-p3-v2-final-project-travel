@@ -3,7 +3,6 @@
 from helpers import (
     exit_program,
     list_countries,
-    find_country_by_name,
     find_countries_by_language,
     create_country,
     update_country,
@@ -92,13 +91,12 @@ def country_menu():
           "******************************\n" +
           "Here you can view and find different countries as well as Add, Update, Delete, and Filter accordingly\n")
     print("Type 1 to List all countries")
-    print("Type 2 to Find country by name")
-    print("Type 3 to Find countries by language")
-    print("Type 4 to Add country")
-    print("Type 5 to Update country")
-    print("Type 6 to Delete country")
-    print("Type 7 to Show all countries with cities that have not been visited")
-    print("Type 8 to go back to the main menu")
+    print("Type 2 to Find countries by language")
+    print("Type 3 to Add country")
+    print("Type 4 to Update country")
+    print("Type 5 to Delete country")
+    print("Type 6 to Show all countries with cities that have not been visited")
+    print("Type 7 to go back to the main menu")
 
 def city_menu():
     print("Welcome to your City's Menu \n" +
@@ -124,18 +122,16 @@ def main():
                 if choice_2 == "1":
                     list_countries()
                 elif choice_2 == "2":
-                    find_country_by_name()
-                elif choice_2 == "3":
                     find_countries_by_language()
-                elif choice_2 == "4":
+                elif choice_2 == "3":
                     create_country()
-                elif choice_2 == "5":
+                elif choice_2 == "4":
                     update_country()
-                elif choice_2 == "6":
+                elif choice_2 == "5":
                     delete_country()
-                elif choice_2 == "7":
+                elif choice_2 == "6":
                     countries_with_cities_not_visited()
-                elif choice_2 == "8":
+                elif choice_2 == "7":
                     main()
                 else:
                     print("Invalid choice. Please re-renter a valid option")

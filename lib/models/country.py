@@ -92,8 +92,11 @@ class Country:
             SET name = ?, language = ?, population = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.language, self.population, self.id))
-        CONN.commit()
+        if isinstance(self.population, int) and self.population > 1000:
+            CURSOR.execute(sql, (self.name, self.language, self.population, self.id))
+            CONN.commit()
+        else:
+            raise ValueError("Population must be an integer greater then 1000")
 
     def delete(self):
         sql = """

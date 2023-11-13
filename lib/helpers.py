@@ -4,43 +4,39 @@ from models.country import Country
 from models.__init__ import CONN, CURSOR
 
 
+
 def exit_program():
     print("Goodbye!")
     exit()
 
 def list_countries():
     countries = Country.get_all()
-    print("\nThe following countries are in the Database. Don't see your country? Add it in!")
+    print("\nThe following countries are in the Database. Don't see your country? Add it in!\n")
     for country in countries:
-        print(f"{country.name} Country ID: {country.id}")
-        print("\nTo see a country's details, type the Country's ID provided next to the country in the list above")
-        find_country_by_name()
+        print(f"{country.name} Country ID: {country.id}\n" +
+              f"Language:{country.language} Population:{country.population}\n")
 
-
-def find_country_by_name():
-    id_ = input("Enter the Country's ID: ")
-    country = Country.find_by_id(id_)
-    print(country) if country else print(f'Country {id_} not found')
 
 def find_countries_by_language():
     language = input("Enter the language: ").title()
     countries = Country.find_by_language(language)
     if countries:
         for country in countries:
-            print(f"{country.name}")
+            print(f"{country.name} language:{country.language}")
     else:
         print("No countries with the stated language")
 
 def create_country():
     name = input("Enter the Country's name: ").title()
     language = input("Enter the Country's language: ").title()
-    population = int(input("Enter the Country's population: "))
+    population = input("Enter the Country's population: ")
+    population2 = population
     try:
-        country = Country.create(name, language, population)
-        print(f'Success: {country}')
+        country = Country.create(name, language, population2)
+        print(f'Successfully Added {country}')
     except Exception as exc:
-        print("Error creating company: ", exc)
-
+        print("Error creating Country: ", exc)
+    
 def update_country():
     input_name = input("Enter the country's name: ").title()
     if country := Country.find_by_name(input_name):
@@ -53,19 +49,23 @@ def update_country():
             country.population = population
 
             country.update()
-            print(f'Success: {country}')
-        except Exception as exc:
-            print("Error updating country: ", exc)
+            print(f'Success: {country.name} has been updated!')
+        except Exception:
+            print("Error updating country: Population must be an integer greater then 1000 ", )
     else:
         print(f'Country {input_name} not found')
 
 def delete_country():
     input_name = input("Enter the Country's name: ").title()
+    cities = City.get_all()
     if country := Country.find_by_name(input_name):
+        cities_in_country = [city for city in cities if city.country_id == country.id]
+        for city in cities_in_country:
+            city.delete()
         country.delete()
-        print(f'Country {input_name} deleted')
+        print(f'\nCountry {input_name} deleted')
     else:
-        print(f'Country {input_name} not found')
+        print(f'\nCountry {input_name} not found')
 
 def countries_with_cities_not_visited():
     cities = City.get_all()
@@ -75,7 +75,11 @@ def countries_with_cities_not_visited():
         country = Country.find_by_id(city.country_id)
         countries.add(country)
     for country in countries:
-        print(country)
+        city_for_country = [city for city in cities_not_visited if city.country_id == country.id]
+        print(f"\n{country.name}:The following cities have not been visited:")
+        for city in city_for_country:
+            print(city.name)
+
 
 def list_cities():
     cities = City.get_all()
