@@ -13,7 +13,7 @@ def list_countries():
     countries = Country.get_all()
     print("\nThe following countries are in the Database. Don't see your country? Add it in!\n")
     for country in countries:
-        print(f"{country.name} Country ID: {country.id}\n" +
+        print(f"{country.name}\n" +
               f"Language:{country.language} Population:{country.population}\n")
 
 
@@ -21,21 +21,24 @@ def find_countries_by_language():
     language = input("Enter the language: ").title()
     countries = Country.find_by_language(language)
     if countries:
+        print(f"\nWe found {len(countries)} countries that speak {language}! ")
         for country in countries:
-            print(f"{country.name} language:{country.language}")
+            print(f"\n{country.name}")
     else:
-        print("No countries with the stated language")
+        print("\nNo countries with the stated language")
 
 def create_country():
     name = input("Enter the Country's name: ").title()
     language = input("Enter the Country's language: ").title()
     population = input("Enter the Country's population: ")
-    population2 = population
-    try:
-        country = Country.create(name, language, population2)
-        print(f'Successfully Added {country}')
-    except Exception as exc:
-        print("Error creating Country: ", exc)
+    if population.isdigit():
+        try:
+            country = Country.create(name, language, int(population))
+            print(f'\nSuccessfully Added {country.name}!!!!')
+        except Exception as exc:
+            print("Error creating Country: ", exc)
+    else:
+        print("Error: Population must be an integer greater then 1000")
     
 def update_country():
     input_name = input("Enter the country's name: ").title()
@@ -50,8 +53,8 @@ def update_country():
 
             country.update()
             print(f'Success: {country.name} has been updated!')
-        except Exception:
-            print("Error updating country: Population must be an integer greater then 1000 ", )
+        except Exception as exc:
+            print("Error updating country: Population must be an integer greater then 1000 or", exc )
     else:
         print(f'Country {input_name} not found')
 
