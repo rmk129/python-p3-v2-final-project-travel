@@ -11,7 +11,8 @@ def exit_program():
 def list_countries():
     countries = Country.get_all()
     for country in countries:
-        print(country)
+        # breakpoint()
+        print(f"{country.name}")
 
 def find_country_by_name():
     name = input("Enter the Country's Name: ").title()
@@ -23,7 +24,7 @@ def find_countries_by_language():
     countries = Country.find_by_language(language)
     if countries:
         for country in countries:
-            print(country)
+            print(f"{country.name}")
     else:
         print("No countries with the stated language")
 
@@ -111,10 +112,11 @@ def update_city():
         try:
             name = input("Enter the City's new name: ")
             city.name = name
-            visited = bool(input("Enter True or False if the city has been visited: "))
-            city.visited = visited
-            population = int(input("Enter the City's population: "))
-            city.population = population
+            visited = input("Enter True or False if the city has been visited: ")
+            is_visited = True if visited.title() == "True" else False
+            city.visited = is_visited
+            population = input("Enter the City's population: ")
+            city.population = int(population)
 
             city.update()
             print(f'Success: {city}')

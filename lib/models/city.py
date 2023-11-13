@@ -94,11 +94,12 @@ class City:
 
     def update(self):
         sql = """
-            UPDATE countries
+            UPDATE cities
             SET name = ?, visited = ?, population = ?, country_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, (self.visited), self.population,
+        breakpoint()
+        CURSOR.execute(sql, (self.name, self.visited, self.population,
                              self.country_id, self.id))
         CONN.commit()
 
