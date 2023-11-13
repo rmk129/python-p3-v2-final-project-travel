@@ -44,10 +44,10 @@ class City:
     
     @population.setter
     def population(self, population):
-        if isinstance(population, int) and population > 100000:
+        if isinstance(population, int) and population > 1000:
             self._population = population
         else:
-            raise ValueError("Population must be an Integer less than the population of its country")
+            raise ValueError("Population must be an Integer greater then 1000")
         
     @property
     def country_id(self):
@@ -101,7 +101,6 @@ class City:
             SET name = ?, visited = ?, population = ?, country_id = ?
             WHERE id = ?
         """
-        breakpoint()
         CURSOR.execute(sql, (self.name, self.visited, self.population,
                              self.country_id, self.id))
         CONN.commit()

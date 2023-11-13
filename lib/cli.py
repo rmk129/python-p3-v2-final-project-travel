@@ -91,12 +91,13 @@ def country_menu():
           "******************************\n" +
           "Here you can view and find different countries as well as Add, Update, Delete, and Filter accordingly\n")
     print("Type 1 to List all countries")
-    print("Type 2 to Find countries by language")
-    print("Type 3 to Add country")
-    print("Type 4 to Update country")
-    print("Type 5 to Delete country")
-    print("Type 6 to Show all countries with cities that have not been visited")
-    print("Type 7 to go back to the main menu")
+    print("Type 2 to List all cities in a country sorted by population")
+    print("Type 3 to Find countries by language")
+    print("Type 4 to Add country")
+    print("Type 5 to Update country")
+    print("Type 6 to Delete country")
+    print("Type 7 to Show all countries with cities that have not been visited")
+    print("Type 10 to go back to the main menu")
 
 def city_menu():
     print("Welcome to your City's Menu \n" +
@@ -104,12 +105,11 @@ def city_menu():
           "Here you can view and find different cities as well as Add, Update, Delete, and Filter accordingly\n")
     print("Type 1 to List all cities")
     print("Type 2 to Find city by name")
-    print("Type 3 to List all cities in a country sorted by population")
-    print("Type 4 to Add city")
-    print("Type 5 to Update city")
-    print("Type 6 to Delete city")
-    print("Type 7 to List cities by visited or not visited")
-    print("Type 8 to Go back to the main menu")
+    print("Type 3 to Add city")
+    print("Type 4 to Update city")
+    print("Type 5 to Delete city")
+    print("Type 6 to List cities by visited or not visited")
+    print("Type 10 to Go back to the main menu")
 
 def main():
     while True:
@@ -122,16 +122,18 @@ def main():
                 if choice_2 == "1":
                     list_countries()
                 elif choice_2 == "2":
-                    find_countries_by_language()
+                    cities_by_population_in_country()
                 elif choice_2 == "3":
-                    create_country()
+                    find_countries_by_language()
                 elif choice_2 == "4":
-                    update_country()
+                    create_country()
                 elif choice_2 == "5":
-                    delete_country()
+                    update_country()
                 elif choice_2 == "6":
-                    countries_with_cities_not_visited()
+                    delete_country()
                 elif choice_2 == "7":
+                    countries_with_cities_not_visited()
+                elif choice_2 == "10":
                     main()
                 else:
                     print("Invalid choice. Please re-renter a valid option")
@@ -144,16 +146,14 @@ def main():
                 elif choice_3 == "2":
                     find_city_by_name()
                 elif choice_3 == "3":
-                    cities_by_population_in_country()
-                elif choice_3 == "4":
                     create_city()
-                elif choice_3 == "5":
+                elif choice_3 == "4":
                     update_city()
-                elif choice_3 == "6":
+                elif choice_3 == "5":
                     delete_city()
-                elif choice_3 == "7":
+                elif choice_3 == "6":
                     list_cities_by_visited()
-                elif choice_3 == "8":
+                elif choice_3 == "10":
                     main()
                 else:
                     print("Invalid choice. Please re-renter a valid option")
