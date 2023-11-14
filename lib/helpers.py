@@ -96,44 +96,47 @@ def list_cities():
         print(f"{city.name}\n"+
               f"Visited:{city.visited}, Population:{city.population}, Country:{country.name}\n")
 
-def find_city_by_name():
+def find_city_by_name(country):
     name = input("Enter the city's name: ").title()
     city = City.find_by_name(name)
-    if city:
-        country = Country.find_by_id(city.country_id)
+    if city and city.country_id == country.id:
         print(f"\n{city.name}\n" + f"Visited:{city.visited}, Population:{city.population}, Country: {country.name}\n")
     else:
-        print(f"\nCity {name} not found\n")
+        print(f"\nCity {name} not found in {country.name}\n")
 
 def cities_by_population_in_country():
     name = input("Enter the Country's name: ").title()
-    print(f"\n{name} has the following cities in your database:\n")
+    
     country = Country.find_by_name(name)
-    cities = City.get_all()
-    cities_in_country = [city for city in cities if city.country_id == country.id]
-    cities_in_country.sort(key=lambda x: x.population, reverse=True)
-    for city in cities_in_country:
-        print(f"{city.name}\n" + f"Visited:{city.visited}, Population:{city.population}\n" )
+    if country:
+        print(f"\n{name} has the following cities in your database:\n")
+        cities = City.get_all()
+        cities_in_country = [city for city in cities if city.country_id == country.id]
+        cities_in_country.sort(key=lambda x: x.population, reverse=True)
+        for city in cities_in_country:
+            print(f"{city.name}\n" + f"Visited:{city.visited}, Population:{city.population}\n" )
+    else:
+        print(f"\nNo countries found that mactch {name}")
+    return country
 
-def create_city():
+def create_city(country):
     print("Leaving any of the following prompts empty will create an Error in creating the city\n")
     name = input("Enter City's name: ").title()
     visited = input("Enter True or False if you have visited the city: ").title()
     population = input("Enter the City's population: ")
-    country_name = input("Enter the Country the City is in: ").title()
-    country = Country.find_by_name(country_name)
-    if population.isdigit() and country and visited == "True" or visited == "False":
+    if population.isdigit() and visited == "True" or visited == "False":
         try:
             city = City.create(name, bool(visited), int(population), country.id)
-            print(f"Successfully added {city.name} to the database!!")
+            print(f"\nSuccessfully added {city.name} to {country.name}'s database!!\n")
         except Exception as exc:
             print("Error creating city: ", exc)
     else:
         print("\nERROR: Population must be an integer greater then 1000 or Visited city has to be True or False\n")
 
-def update_city():
+def update_city(country):
     input_name = input("Enter the City's name you wish to update: ").title()
-    if city := City.find_by_name(input_name):
+    city = City.find_by_name(input_name)
+    if city and city.country_id == country.id:
         try:
             print("\nFeel free to leave prompts blank and press enter to move on if there are not changes to that part\n")
             name = input("\nEnter the City's new name: ").title()
@@ -152,15 +155,16 @@ def update_city():
         except Exception as exc:
             print("\nError updating {city.name}: \n", exc)
     else:
-        print(f'City {input_name} not found')
+        print(f'City {input_name} not found in {country.name}')
 
-def delete_city():
+def delete_city(country):
     input_name = input("Enter the City's name you wish to delete: ").title()
-    if city := City.find_by_name(input_name):
+    city = City.find_by_name(input_name)
+    if city and city.country_id == country.id:
         city.delete()
         print(f'\nCity {input_name} deleted\n')
     else:
-        print(f'\nCity {input_name} not found\n')
+        print(f'\nCity {input_name} not found in {country.name}\n')
 
 def list_cities_by_visited():
     input_info = input("Enter Y to see visited and N to see not visited: ").title()
