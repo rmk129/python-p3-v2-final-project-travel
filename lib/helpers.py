@@ -44,12 +44,16 @@ def update_country():
     input_name = input("Enter the country's name: ").title()
     if country := Country.find_by_name(input_name):
         try:
+            print("\nFeel free to leave prompts blank and press enter to move on if there are no changes to that part\n")
             name = input("Enter the Country's new name: ").title()
-            country.name = name
+            if len(name) > 0:
+                country.name = name
             language = input("Enter the Country's new language: ").title()
-            country.language = language
-            population = int(input("Enter the Country's new population "))
-            country.population = population
+            if len(language) > 0:
+                country.language = language
+            population = input("Enter the Country's new population ")
+            if population.isdigit():
+                country.population = int(population)
 
             country.update()
             print(f'Success: {country.name} has been updated!')
@@ -131,7 +135,7 @@ def update_city():
     input_name = input("Enter the City's name you wish to update: ").title()
     if city := City.find_by_name(input_name):
         try:
-            
+            print("\nFeel free to leave prompts blank and press enter to move on if there are not changes to that part\n")
             name = input("\nEnter the City's new name: ").title()
             if len(name) > 0:
                 city.name = name
