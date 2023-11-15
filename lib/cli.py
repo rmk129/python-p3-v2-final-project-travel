@@ -105,7 +105,7 @@ def city_handler(country):
         elif choice_3 == "4":
             delete_city(country)
         elif choice_3 == "5":
-            list_cities_by_visited()
+            list_cities_by_visited(country)
         elif choice_3 == "10":
             country_handler()
         else:

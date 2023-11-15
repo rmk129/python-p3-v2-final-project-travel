@@ -166,17 +166,17 @@ def delete_city(country):
     else:
         print(f'\nCity {input_name} not found in {country.name}\n')
 
-def list_cities_by_visited():
+def list_cities_by_visited(country):
     input_info = input("Enter Y to see visited and N to see not visited: ").title()
     cities = City.get_all()
     if input_info == "Y" and cities:
         print("\n The following cities HAVE been visited:\n")
-        visited_cities = [city for city in cities if city.visited == True]
+        visited_cities = [city for city in cities if city.visited == True and city.country_id == country.id]
         for city in visited_cities:
             print(city.name)
     elif input_info == "N" and cities:
         print("\nThe following cities HAVE NOT been visited:\n")
-        not_visited_cities = [city for city in cities if city.visited == False]
+        not_visited_cities = [city for city in cities if city.visited == False and city.country_id == country.id]
         for city in not_visited_cities:
             print(city.name)
     else:
